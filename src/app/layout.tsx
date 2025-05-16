@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
+import { Libre_Caslon_Text } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const libreCaslonText = Libre_Caslon_Text({
+  variable: "--font-libre-caslon-text",
   subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -25,9 +27,25 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`
+          ${inter.variable} ${libreCaslonText.variable} antialiased
+          bg-[#0A0903] text-white min-h-screen
+        `}
+        style={{
+          minHeight: "100vh",
+        }}
       >
-        {children}
+        <div
+          className="
+            min-h-screen flex flex-col items-start mx-auto
+            w-full
+            px-4
+            sm:max-w-[calc(100vw-452px)]
+            sm:px-8
+          "
+        >
+          {children}
+        </div>
       </body>
     </html>
   );
