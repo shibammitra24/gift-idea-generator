@@ -5,6 +5,16 @@ import { getMockGiftIdeas } from "@/lib/mockGiftData";
 // Initialize Gemini API with your API key
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
+interface RawGiftIdea {
+  title?: string;
+  desc?: string;
+  description?: string;
+  budget?: string;
+  price?: string;
+  likeMeter?: string;
+  [key: string]: any; // For any other fields that might come from the AI
+}
+
 export async function POST(request: Request) {
   try {
     const { occasion, interests } = await request.json();
@@ -48,7 +58,7 @@ likeMeter: ""
       const result = await model.generateContent(prompt);
       const response = await result.response;
       const text = response.text();
-      console.log("Gemini API response:", text);
+      // console.log("Gemini API response:", text);
 
       // Parse the text into structured data
       const giftIdeas = parseGiftIdeas(text);
@@ -98,7 +108,7 @@ function parseGiftIdeas(text: string) {
             title: (idea.title || "Gift Idea").trim(),
             desc: (idea.desc || idea.description || "A perfect gift").trim(),
             budget: (idea.budget || idea.price || "Mid-range").trim(),
-            likeMeter: (idea.likeMeter || "80%").trim(),
+            likeMeter: (idea.likeMeter || "High").trim(),
           }));
         }
       } catch (e) {
@@ -116,14 +126,14 @@ function parseGiftIdeas(text: string) {
 
       try {
         const parsedIdeas = JSON.parse(jsonArrayStr);
-        return parsedIdeas.map((idea) => ({
+        return parsedIdeas.map((idea: RawGiftIdea) => ({
           title: (idea.title || "Gift Idea").trim(),
           desc: (idea.desc || idea.description || "A perfect gift").trim(),
           budget: (idea.budget || idea.price || "Mid-range").trim(),
-          likeMeter: (idea.likeMeter || "80%").trim(),
+          likeMeter: (idea.likeMeter || "High").trim(),
         }));
-      } catch (e) {
-        console.error("Failed to parse JSON array:", e);
+      } catch (error) {
+        console.error("Failed to parse JSON array:", error);
         // Fall back to line-by-line parsing
       }
     }

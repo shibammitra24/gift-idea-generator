@@ -32,6 +32,7 @@ export default function PromptWindow({
 
   // New states for gift generation
   const [error, setError] = useState("");
+  const [isGenerating, setIsGeneratingState] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const occasionSearchRef = useRef<HTMLInputElement>(null);
@@ -177,7 +178,7 @@ export default function PromptWindow({
     }
 
     setError("");
-    setIsGenerating(true); // Update parent state
+    setIsGeneratingState(true); // Update parent state
 
     // Pass the current occasion to the parent component
     setOccasion(occasion);
@@ -205,7 +206,7 @@ export default function PromptWindow({
       console.error("Error generating gift ideas:", err);
       setError(err.message || "Something went wrong");
     } finally {
-      setIsGenerating(false); // Update parent state
+      setIsGeneratingState(false); // Update parent state
     }
   };
 
@@ -516,9 +517,9 @@ export default function PromptWindow({
         </motion.div>
       </motion.div>
 
-      {/* Buttons - updated styling and reduced bounciness */}
+      {/* Buttons section - fixed to prevent layout shift */}
       <motion.div
-        className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-4"
+        className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-4 w-full"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.9, duration: 0.5 }}
@@ -527,28 +528,37 @@ export default function PromptWindow({
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           transition={{ type: "spring", stiffness: 300, damping: 15 }}
+          className="w-full sm:w-auto text-center"
         >
           <Button
-            className="bg-[#FF8200] cursor-pointer hover:bg-orange-600 text-black font-semibold px-10 py-6 rounded-full text-lg"
+            className="bg-[#FF8200] hover:bg-orange-600 text-black font-semibold px-10 py-6 rounded-full text-lg w-full sm:w-auto min-w-[200px]"
             onClick={generateGiftIdeas}
-            disabled={interests.length === 0}
+            disabled={isGenerating || interests.length === 0}
           >
-            Generate Ideas
+            {isGenerating ? (
+              <div className="flex items-center justify-center">
+                <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin mr-2"></div>
+                Generating...
+              </div>
+            ) : (
+              "Generate Ideas"
+            )}
           </Button>
         </motion.div>
         <motion.div
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           transition={{ type: "spring", stiffness: 300, damping: 15 }}
+          className="w-full sm:w-auto text-center"
         >
           <Button
             variant="outline"
             className={clsx(
-              "border border-[#FF8200]/30 bg-[#FF8200]/10 cursor-pointer hover:text-white px-10 py-6 rounded-full text-lg flex items-center gap-2",
+              "border border-[#FF8200]/30 bg-[#FF8200]/10 hover:text-white px-10 py-6 rounded-full text-lg flex items-center justify-center gap-2 w-full sm:w-auto min-w-[200px]",
               "hover:bg-[#FF8200]/20"
             )}
             onClick={handleSurpriseMe}
-            disabled={false}
+            disabled={isGenerating}
           >
             Surprise me <Sparkles className="ml-2 w-5 h-5 text-[#FF8200]" />
           </Button>
