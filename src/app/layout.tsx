@@ -32,20 +32,16 @@ export default function RootLayout({
           ${inter.variable} ${libreCaslonText.variable} antialiased
           bg-[#0A0903] text-white min-h-screen selection:bg-orange-600/20
         `}
-        style={{
-          minHeight: "100vh",
-        }}
       >
         <div
           className="
-            min-h-screen flex flex-col items-start mx-auto
+            min-h-screen flex flex-col items-center mx-auto
             w-full
             px-4
-            sm:max-w-[calc(100vw-452px)]
             sm:px-8
           "
         >
-          {children}
+          <div className="w-full flex flex-col items-center">{children}</div>
         </div>
         <Footer />
       </body>
