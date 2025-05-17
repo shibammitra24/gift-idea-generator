@@ -48,7 +48,7 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
           >
-            Gift <span className="not-italic">'o</span> me
+            Giftoid
           </motion.span>
         </motion.div>
         <motion.a

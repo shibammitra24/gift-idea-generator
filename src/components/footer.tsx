@@ -20,7 +20,7 @@ export default function Footer() {
 
       <div className="py-6 px-4 text-center relative z-10 max-w-6xl mx-auto">
         <p className="text-gray-500 text-sm">
-          © 2025 Gift &apos;o me | Smart Gift Idea Generator
+          © 2025 Giftoid | Smart Gift Idea Generator
         </p>
       </div>
     <div
