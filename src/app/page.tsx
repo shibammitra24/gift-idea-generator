@@ -6,6 +6,7 @@ import Hero from "@/components/hero";
 import Navbar from "@/components/navbar";
 import { GiftIdea } from "@/types";
 import Footer from "@/components/footer";
+import Script from "next/script";
 
 // Dynamically import components that use browser APIs
 const GiftSection = dynamic(() => import("@/components/giftSection"), {
@@ -29,24 +30,34 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <Hero />
-      {isMounted && (
-        <PromptWindow
-          setIsGenerating={setIsGenerating}
-          setGiftIdeas={setGiftIdeas}
-          setOccasion={setOccasion}
-        />
-      )}
-      {isMounted && (
-        <GiftSection
-          isGenerating={isGenerating}
-          giftIdeas={giftIdeas}
-          occasion={occasion}
-        />
-      )}
-      {/* <Footer /> */}
-    </div>
+    <>
+      {/* Load the fix-layout.js script */}
+      <Script src="/fix-layout.js" strategy="afterInteractive" />
+
+      <div className="w-full flex flex-col items-center">
+        <Navbar />
+        <div className="w-full max-w-6xl">
+          <Hero />
+        </div>
+        {isMounted && (
+          <div className="w-full flex justify-center">
+            <PromptWindow
+              setIsGenerating={setIsGenerating}
+              setGiftIdeas={setGiftIdeas}
+              setOccasion={setOccasion}
+            />
+          </div>
+        )}
+        {isMounted && (
+          <div className="w-full flex justify-center">
+            <GiftSection
+              isGenerating={isGenerating}
+              giftIdeas={giftIdeas}
+              occasion={occasion}
+            />
+          </div>
+        )}
+      </div>
+    </>
   );
 }

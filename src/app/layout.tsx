@@ -27,21 +27,38 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" style={{ scrollBehavior: "smooth" }}>
+      <head>
+        {/* Force refresh cache to ensure latest styles are applied */}
+        <meta
+          httpEquiv="Cache-Control"
+          content="no-cache, no-store, must-revalidate"
+        />
+        <meta httpEquiv="Pragma" content="no-cache" />
+        <meta httpEquiv="Expires" content="0" />
+      </head>
       <body
         className={`
           ${inter.variable} ${libreCaslonText.variable} antialiased
           bg-[#0A0903] text-white min-h-screen selection:bg-orange-600/20
         `}
       >
-        {/* Main content container with consistent max width */}
+        {/* Main content container with fixed dimensions */}
         <div
-          className="mx-auto w-full min-h-screen flex flex-col items-center justify-start px-4 sm:px-6 md:px-8"
+          className="mx-auto w-full min-h-screen flex flex-col items-center"
           style={{
-            maxWidth: "1536px", // 2xl breakpoint
-            margin: "0 auto",
+            maxWidth: "100%",
+            padding: "0 16px", // Explicit padding
           }}
         >
-          {children}
+          <div
+            className="w-full max-w-[1536px] flex flex-col items-center"
+            style={{
+              margin: "0 auto",
+              width: "100%",
+            }}
+          >
+            {children}
+          </div>
         </div>
         <Footer />
       </body>
