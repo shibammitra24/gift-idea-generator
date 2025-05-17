@@ -52,7 +52,7 @@ export default function Navbar() {
           </motion.span>
         </motion.div>
         <motion.a
-          href="#"
+          href="mailto:shibammitra900@gmail.com?subject=Gift%20Generator%20Feedback"
           className="bg-[#FF8200] hover:bg-orange-600 text-black font-semibold px-3 py-2 sm:px-4 rounded transition-colors text-sm sm:text-base"
           style={{ fontFamily: "var(--font-inter), sans-serif" }}
           initial={{ opacity: 0, scale: 0.9 }}

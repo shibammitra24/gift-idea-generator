@@ -16,7 +16,8 @@ export async function POST(request: Request) {
       );
     }
 
-    const prompt = `Generate 4 thoughtful gift ideas for a ${occasion} that align with these interests: ${interests.join(
+    // Update the prompt to request 6 ideas instead of 4
+    const prompt = `Generate 6 thoughtful gift ideas for a ${occasion} that align with these interests: ${interests.join(
       ", "
     )}.
 
