@@ -33,15 +33,15 @@ export default function RootLayout({
           bg-[#0A0903] text-white min-h-screen selection:bg-orange-600/20
         `}
       >
+        {/* Main content container with consistent max width */}
         <div
-          className="
-            min-h-screen flex flex-col items-center mx-auto
-            w-full
-            px-4
-            sm:px-8
-          "
+          className="mx-auto w-full min-h-screen flex flex-col items-center justify-start px-4 sm:px-6 md:px-8"
+          style={{
+            maxWidth: "1536px", // 2xl breakpoint
+            margin: "0 auto",
+          }}
         >
-          <div className="w-full flex flex-col items-center">{children}</div>
+          {children}
         </div>
         <Footer />
       </body>
